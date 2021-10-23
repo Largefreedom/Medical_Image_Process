@@ -64,17 +64,15 @@ from medpy.io import load,save
 
 
 origin_path =  "F:\lymph_1\ly_resize_10_png"
-
-path_list = [i for i in os.listdir(origin_path) if(str(i).endswith(".png"))]
+path_list = [i for i in os.listdir(origin_path) if(str(i).endswith(".tif"))]
 if(len(path_list) > 0):
     img = Image.open(os.path.join(origin_path,path_list[0]))
     height,width = img.size
-    result_arr = np.zeros((height, width, len(path_list)),dtype=np.int8)
+    result_arr = np.zeros((width, height, len(path_list)))
     for index in range(len(path_list)):
         print("propress image slice is ",index)
         #递归计算；
         img1 = Image.open(os.path.join(origin_path, path_list[index]))
-        img1 = img1.transpose(Image.FLIP_LEFT_RIGHT).transpose(Image.ROTATE_90)
         img_arr = np.array(img1).copy()
         result_arr[:,:,index] = img_arr
     img_save = np.array(result_arr, 'float32')

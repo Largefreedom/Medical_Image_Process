@@ -6,10 +6,10 @@ Image.MAX_IMAGE_PIXELS = None
 '''
     缩放图片
 '''
-def resize_image(ori_path,save_path,scale_fator):
+def resize_image(ori_path,save_path,scale_fator,suffix):
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    path_list = os.listdir(ori_path)
+    path_list = [i for i in os.listdir(ori_path) if(str(i).endswith(".{}".format(suffix)))]
     for i in path_list:
         img_path = os.path.join(ori_path,str(i))
         save_img_path = os.path.join(save_path,str(i))
@@ -31,7 +31,7 @@ def resize_image(ori_path,save_path,scale_fator):
 #
 lung_path = "F:\lymph_1\ly_re"
 lung_save = "F:\lymph_1\ly_resize_10"
-resize_image(lung_path,lung_save,10)
+resize_image(lung_path,lung_save,10,"tif")
 
 
 
