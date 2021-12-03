@@ -30,7 +30,7 @@ tif_path = []
 number_path = []
 
 for i in path_list:
-    if str(i).endswith('.tif'):
+    if str(i).endswith('.tif'): # 后缀为Tif
         tif_path.append(os.path.join(origin_path,str(i)))
         number_path.append(os.path.join(save_path,str(i).split('_')[0]+'.png'))
 
@@ -39,7 +39,8 @@ max_width,max_height = 0,0
 
 for index,j in enumerate(tif_path):
     tif_pic = cv2.imdecode(np.fromfile(str(j),dtype = np.uint8),-1)
-    gray_image = cv2.cvtColor(tif_pic,cv2.COLOR_BGR2GRAY)
+    # gray_image = cv2.cvtColor(tif_pic,cv2.COLOR_BGR2GRAY)
+    gray_image = tif_pic
     if max_width < gray_image.shape[1]:
         max_width = gray_image.shape[1]
 
@@ -52,8 +53,12 @@ for index,j in enumerate(tif_path):
     print(f'{save_path_1} save sucessfully !')
 
 
+
+
 for i in os.listdir(save_path):
-    new_image = Image.new('L', (max_width, max_height), (255))  # 创建一张图片，以白色为底；
+    # 觐见
+    # new_image = Image.new('RGB', (max_width, max_height), (255,255,255))  # 创建一张图片，以白色为底；
+    new_image = Image.new('RGB', (max_width, max_height), (255, 255, 255))  # 创建一张图片，以白色为底；
     init_img = Image.open(os.path.join(save_path,str(i)))  # 打开初始化照片
     new_image.paste(init_img,
                     (int((max_width - init_img.size[0]) / 2), int((max_height - init_img.size[1]) / 2)))
